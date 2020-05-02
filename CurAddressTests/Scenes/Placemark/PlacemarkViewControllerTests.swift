@@ -32,7 +32,7 @@ class PlacemarkViewControllerTableViewSpy: UITableView
   var reloadSectionsCalled = false
   var reloadSectionsIndexSet: IndexSet?
   
-  override func reloadSections(_ sections: IndexSet, with animation: UITableViewRowAnimation)
+  override func reloadSections(_ sections: IndexSet, with animation: UITableView.RowAnimation)
   {
     reloadSectionsCalled = true
     reloadSectionsIndexSet = sections
