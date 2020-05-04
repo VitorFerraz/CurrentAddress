@@ -17,6 +17,8 @@ protocol MapBusinessLogic
 {
     func doSomething(request: Map.Something.Request)
     func requestForCurrentLocation(request: Map.RequestForCurrentLocation.Request)
+    func getCurrentLocation(request: Map.GetCurrentLocation.Request)
+    func centerMap(request: Map.CenterMap.Request)
 }
 
 protocol MapDataStore
@@ -31,6 +33,8 @@ class MapInteractor: NSObject, MapBusinessLogic, MapDataStore, CLLocationManager
     var worker: MapWorker?
     //var name: String = ""
     let locationManager = CLLocationManager()
+    var currentLocation: MKUserLocation?
+    var centerMapFirstTime: Bool = false
     // MARK: Do something
     
     func doSomething(request: Map.Something.Request)
@@ -45,11 +49,24 @@ class MapInteractor: NSObject, MapBusinessLogic, MapDataStore, CLLocationManager
     // MARK: Request for current location
     func requestForCurrentLocation(request: Map.RequestForCurrentLocation.Request) {
         locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+            case .notDetermined, .restricted, .denied:
+                print("No access")
+            case .authorizedAlways, .authorizedWhenInUse:
+                print("Access")
+                let response = Map.RequestForCurrentLocation.Response(success: true)
+                presenter?.presentForCurrentLocation(response: response)
+            @unknown default:
+                break
+            }
+        } else {
+            locationManager.requestWhenInUseAuthorization()
+        }
     }
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         var response: Map.RequestForCurrentLocation.Response
-
+        
         switch status {
         case .authorizedWhenInUse:
             response = Map.RequestForCurrentLocation.Response(success: true)
@@ -58,7 +75,35 @@ class MapInteractor: NSObject, MapBusinessLogic, MapDataStore, CLLocationManager
         default:
             return
         }
-        presenter?.requestForCurrentLocation(response: response)
+        presenter?.presentForCurrentLocation(response: response)
         
+    }
+    
+    // MARK: Get current location
+    func getCurrentLocation(request: Map.GetCurrentLocation.Request) {
+        request.mapView.delegate = self
+    }
+}
+
+extension MapInteractor: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        currentLocation = userLocation
+        let response = Map.GetCurrentLocation.Response(success: true)
+        presenter?.presentGetCurrentLocation(response: response)
+    }
+    func mapView(_ mapView: MKMapView, didFailToLocateUserWithError error: Error) {
+        currentLocation = nil
+        let response = Map.GetCurrentLocation.Response(success: false, error: error)
+        presenter?.presentGetCurrentLocation(response: response)
+    }
+    
+    func centerMap(request: Map.CenterMap.Request) {
+        if !centerMapFirstTime, let currentLocation = currentLocation {
+            let response = Map.CenterMap.Response(coordinate: currentLocation.coordinate)
+            presenter?.presentCenterMap(response: response)
+            centerMapFirstTime = true
+            
+            
+        }
     }
 }

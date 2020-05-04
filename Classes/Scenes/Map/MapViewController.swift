@@ -17,7 +17,8 @@ protocol MapDisplayLogic: class
 {
     func displaySomething(viewModel: Map.Something.ViewModel)
     func displayRequestForCurrentLocation(viewModel: Map.RequestForCurrentLocation.ViewModel)
-    
+    func displayGetCurrentLocation(viewModel: Map.GetCurrentLocation.ViewModel)
+    func displayCenterMap(viewModel: Map.CenterMap.ViewModel)
 }
 
 class MapViewController: UIViewController, MapDisplayLogic
@@ -102,6 +103,7 @@ class MapViewController: UIViewController, MapDisplayLogic
     func displayRequestForCurrentLocation(viewModel: Map.RequestForCurrentLocation.ViewModel) {
         if viewModel.success {
             mapView.showsUserLocation = true
+            getCurrentLocation()
         } else if let title = viewModel.errorTitle, let message = viewModel.errorMessage {
             showAlert(title: title, message: message)
         }
@@ -111,5 +113,28 @@ class MapViewController: UIViewController, MapDisplayLogic
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(.init(title: "OK", style: .default, handler: nil))
         present(alert,animated: true,completion: nil)
+    }
+    
+    // MARK: Get current location
+    func getCurrentLocation() {
+        let request = Map.GetCurrentLocation.Request(mapView: mapView)
+        interactor?.getCurrentLocation(request: request)
+    }
+    
+    func displayGetCurrentLocation(viewModel: Map.GetCurrentLocation.ViewModel) {
+        if viewModel.success {
+            centerMap()
+        } else if let title = viewModel.errorTitle, let message = viewModel.errorMessage {
+            showAlert(title: title, message: message)
+        }
+    }
+    
+    func centerMap() {
+        let request = Map.CenterMap.Request()
+        interactor?.centerMap(request: request)
+    }
+    
+    func displayCenterMap(viewModel: Map.CenterMap.ViewModel) {
+        mapView.setCenter(viewModel.coordinate, animated: true)
     }
 }

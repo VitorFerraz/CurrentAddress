@@ -11,17 +11,21 @@
 //
 
 import UIKit
+import MapKit
 
 protocol MapPresentationLogic
 {
     func presentSomething(response: Map.Something.Response)
-    func requestForCurrentLocation(response: Map.RequestForCurrentLocation.Response)
+    func presentForCurrentLocation(response: Map.RequestForCurrentLocation.Response)
+    func presentGetCurrentLocation(response: Map.GetCurrentLocation.Response)
+    func presentCenterMap(response: Map.CenterMap.Response)
+
 }
 
 class MapPresenter: MapPresentationLogic
 {
     weak var viewController: MapDisplayLogic?
-    
+
     // MARK: Do something
     
     func presentSomething(response: Map.Something.Response)
@@ -30,7 +34,7 @@ class MapPresenter: MapPresentationLogic
         viewController?.displaySomething(viewModel: viewModel)
     }
     // MARK: Request for current location
-    func requestForCurrentLocation(response: Map.RequestForCurrentLocation.Response) {
+    func presentForCurrentLocation(response: Map.RequestForCurrentLocation.Response) {
         let errorTitle = "Location Disabled"
         let errorMessage = "Please enable location services in the Settings app."
         var viewModel:  Map.RequestForCurrentLocation.ViewModel
@@ -41,5 +45,24 @@ class MapPresenter: MapPresentationLogic
             viewModel = .init(success: false, errorTitle: errorTitle, errorMessage: errorMessage)
         }
         viewController?.displayRequestForCurrentLocation(viewModel: viewModel)
+    }
+    
+    // MARK: Get current location
+    func presentGetCurrentLocation(response: Map.GetCurrentLocation.Response) {
+        var viewModel: Map.GetCurrentLocation.ViewModel
+        if response.success {
+            viewModel = .init(success: true)
+        } else {
+            let errorTitle = "Error"
+            let code = (response.error as NSError?)?.code
+            let errorMessage = code == .some(CLError.locationUnknown.rawValue) ? "Your location could not be determined." : response.error?.localizedDescription
+            viewModel = .init(success: false, errorTitle: errorTitle, errorMessage: errorMessage)
+        }
+        viewController?.displayGetCurrentLocation(viewModel: viewModel)
+    }
+    
+    func presentCenterMap(response: Map.CenterMap.Response) {
+        let viewModel = Map.CenterMap.ViewModel(coordinate: response.coordinate)
+        viewController?.displayCenterMap(viewModel: viewModel)
     }
 }
