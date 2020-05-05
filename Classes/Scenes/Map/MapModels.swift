@@ -80,6 +80,22 @@ enum Map
             var coordinate: CLLocationCoordinate2D
         }
     }
+    
+    enum GetCurrentAddress {
+        struct Request
+        {
+            
+        }
+        struct Response
+        {
+            var success: Bool
+        }
+        struct ViewModel
+        {
+            var success: Bool
+            
+        }
+    }
 }
 
 

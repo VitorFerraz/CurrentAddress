@@ -19,6 +19,7 @@ protocol MapDisplayLogic: class
     func displayRequestForCurrentLocation(viewModel: Map.RequestForCurrentLocation.ViewModel)
     func displayGetCurrentLocation(viewModel: Map.GetCurrentLocation.ViewModel)
     func displayCenterMap(viewModel: Map.CenterMap.ViewModel)
+    func displayCurrentAddress(viewModel: Map.GetCurrentAddress.ViewModel)
 }
 
 class MapViewController: UIViewController, MapDisplayLogic
@@ -121,20 +122,35 @@ class MapViewController: UIViewController, MapDisplayLogic
         interactor?.getCurrentLocation(request: request)
     }
     
+    // MARK: Display current location
     func displayGetCurrentLocation(viewModel: Map.GetCurrentLocation.ViewModel) {
         if viewModel.success {
             centerMap()
+            getCurrentAddress()
         } else if let title = viewModel.errorTitle, let message = viewModel.errorMessage {
             showAlert(title: title, message: message)
         }
     }
     
+    // MARK: Get current address
+    func getCurrentAddress() {
+        let request = Map.GetCurrentAddress.Request()
+        interactor?.getCurrentAddress(request: request)
+    }
+    
+    // MARK: Center Map
     func centerMap() {
         let request = Map.CenterMap.Request()
         interactor?.centerMap(request: request)
     }
     
+    // MARK: Display coordinate on map
     func displayCenterMap(viewModel: Map.CenterMap.ViewModel) {
         mapView.setCenter(viewModel.coordinate, animated: true)
+    }
+    
+    // MARK: Display current address
+    func displayCurrentAddress(viewModel: Map.GetCurrentAddress.ViewModel) {
+        getAddressButton.isEnabled = viewModel.success
     }
 }

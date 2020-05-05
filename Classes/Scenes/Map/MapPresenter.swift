@@ -19,6 +19,8 @@ protocol MapPresentationLogic
     func presentForCurrentLocation(response: Map.RequestForCurrentLocation.Response)
     func presentGetCurrentLocation(response: Map.GetCurrentLocation.Response)
     func presentCenterMap(response: Map.CenterMap.Response)
+    func presentCurrentAddress(response: Map.GetCurrentAddress.Response)
+
 
 }
 
@@ -64,5 +66,10 @@ class MapPresenter: MapPresentationLogic
     func presentCenterMap(response: Map.CenterMap.Response) {
         let viewModel = Map.CenterMap.ViewModel(coordinate: response.coordinate)
         viewController?.displayCenterMap(viewModel: viewModel)
+    }
+    
+    func presentCurrentAddress(response: Map.GetCurrentAddress.Response) {
+        let viewModel = Map.GetCurrentAddress.ViewModel(success: response.success)
+        viewController?.displayCurrentAddress(viewModel: viewModel)
     }
 }
