@@ -26,6 +26,7 @@ protocol MapBusinessLogic
 protocol MapDataStore
 {
     //var name: String { get set }
+    var placemark: MKPlacemark? { get }
 }
 
 class MapInteractor: NSObject, MapBusinessLogic, MapDataStore, CLLocationManagerDelegate
@@ -38,7 +39,7 @@ class MapInteractor: NSObject, MapBusinessLogic, MapDataStore, CLLocationManager
     var currentLocation: MKUserLocation?
     var centerMapFirstTime: Bool = false
     var geocoder = CLGeocoder()
-    var placemark: CLPlacemark?
+    var placemark: MKPlacemark?
     // MARK: Do something
     
     func doSomething(request: Map.Something.Request)
@@ -94,7 +95,7 @@ class MapInteractor: NSObject, MapBusinessLogic, MapDataStore, CLLocationManager
         geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
             var response: Map.GetCurrentAddress.Response
             if let firstPlacemark = placemarks?.first {
-                self.placemark = firstPlacemark
+                self.placemark = MKPlacemark(placemark: firstPlacemark)
                 response = .init(success: true)
             } else {
                 response = .init(success: false)
