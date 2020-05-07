@@ -16,9 +16,6 @@ import XCTest
 // MARK: Test doubles
 class PlacemarkPresentationLogicSpy: PlacemarkPresentationLogic {
     var presentShowPhysicalAddressCalled = false
-    func presentSomething(response: Placemark.Something.Response) {
-        
-    }
     
     func presentPhysicalAddress(response: Placemark.ShowPhysicalAddress.Response) {
         presentShowPhysicalAddressCalled = true

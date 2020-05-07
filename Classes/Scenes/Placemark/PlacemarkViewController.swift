@@ -14,7 +14,6 @@ import UIKit
 
 protocol PlacemarkDisplayLogic: class
 {
-  func displaySomething(viewModel: Placemark.Something.ViewModel)
   func displayPhysicalAddress(viewModel: Placemark.ShowPhysicalAddress.ViewModel)
 }
 
@@ -76,11 +75,6 @@ class PlacemarkViewController: UITableViewController, PlacemarkDisplayLogic
   // MARK: Do something
   
   //@IBOutlet weak var nameTextField: UITextField!
-  
-  func displaySomething(viewModel: Placemark.Something.ViewModel)
-  {
-    //nameTextField.text = viewModel.name
-  }
     // MARK: Show Physical Address
     func showPhysicalAddress() {
         let request = Placemark.ShowPhysicalAddress.Request()

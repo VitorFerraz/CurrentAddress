@@ -13,6 +13,16 @@
 @testable import CurAddress
 import XCTest
 
+// MARK: Test doubles
+class PlacemarkDisplayLoginSpy: PlacemarkDisplayLogic {
+    var displayPhysicalAddressCalled = false
+    
+    func displayPhysicalAddress(viewModel: Placemark.ShowPhysicalAddress.ViewModel) {
+        displayPhysicalAddressCalled = true
+    }
+    
+    
+}
 class PlacemarkPresenterTests: XCTestCase
 {
   // MARK: Subject under test
@@ -42,6 +52,18 @@ class PlacemarkPresenterTests: XCTestCase
   // MARK: Test doubles
 
   // MARK: Tests
-  
+    func testPresentShowPhysicalAddress() {
+        // Given
+        let spy = PlacemarkDisplayLoginSpy()
+        sut.viewController = spy
+        let placemark = CurAddressTestHelpers.placemark
+        let response = Placemark.ShowPhysicalAddress.Response(placemark: placemark)
+        
+        // When
+        sut.presentPhysicalAddress(response: response)
+        
+        //Then
+        XCTAssertTrue(spy.displayPhysicalAddressCalled, "presentPhysicalAddress(response:) should ask the view controller to display the result")
+    }
 
 }
