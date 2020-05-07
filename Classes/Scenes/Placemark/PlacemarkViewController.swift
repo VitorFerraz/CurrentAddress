@@ -70,19 +70,12 @@ class PlacemarkViewController: UITableViewController, PlacemarkDisplayLogic
   override func viewDidLoad()
   {
     super.viewDidLoad()
-    doSomething()
     showPhysicalAddress()
   }
   
   // MARK: Do something
   
   //@IBOutlet weak var nameTextField: UITextField!
-  
-  func doSomething()
-  {
-    let request = Placemark.Something.Request()
-    interactor?.doSomething(request: request)
-  }
   
   func displaySomething(viewModel: Placemark.Something.ViewModel)
   {

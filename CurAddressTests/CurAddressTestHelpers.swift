@@ -1,9 +1,8 @@
 //
 //  CurAddressTestHelpers.swift
-//  CurrentAddress
+//  CurAddressTests
 //
-//  Created by Raymond Law on 9/18/17.
-//
+//  Created by vitor.ferrazvarela on 07/05/20.
 //
 
 import XCTest

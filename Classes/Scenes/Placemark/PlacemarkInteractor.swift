@@ -15,7 +15,6 @@ import MapKit
 
 protocol PlacemarkBusinessLogic
 {
-    func doSomething(request: Placemark.Something.Request)
     func showPhysicalAddress(request: Placemark.ShowPhysicalAddress.Request)
 }
 
@@ -30,17 +29,6 @@ class PlacemarkInteractor: PlacemarkBusinessLogic, PlacemarkDataStore
     var presenter: PlacemarkPresentationLogic?
     var worker: PlacemarkWorker?
     var placemark: MKPlacemark!
-    
-    // MARK: Do something
-    
-    func doSomething(request: Placemark.Something.Request)
-    {
-        worker = PlacemarkWorker()
-        worker?.doSomeWork()
-        
-        let response = Placemark.Something.Response()
-        presenter?.presentSomething(response: response)
-    }
     
     // MARK: Show Physical Address
     func showPhysicalAddress(request: Placemark.ShowPhysicalAddress.Request) {

@@ -17,9 +17,13 @@
 		60CA950A1BFD4F8900E5EBDD /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60CA95091BFD4F8900E5EBDD /* MapKit.framework */; };
 		60DC6A591BD6E89D0041C53E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60DC6A571BD6E89D0041C53E /* InfoPlist.strings */; };
 		716A686D1F312A7B0049C058 /* CurAddressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716A686C1F312A7B0049C058 /* CurAddressTests.swift */; };
-		718A63CB1F70486F006818C7 /* CurAddressTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718A63CA1F70486F006818C7 /* CurAddressTestHelpers.swift */; };
 		718DFE011F21360100828B7B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		718DFE021F21360D00828B7B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
+		90A266BD246438A900F01376 /* CurAddressTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A266BC246438A900F01376 /* CurAddressTestHelpers.swift */; };
+		90A266C3246438C200F01376 /* PlacemarkViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A266BF246438C200F01376 /* PlacemarkViewControllerTests.swift */; };
+		90A266C4246438C200F01376 /* PlacemarkInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A266C0246438C200F01376 /* PlacemarkInteractorTests.swift */; };
+		90A266C5246438C200F01376 /* PlacemarkWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A266C1246438C200F01376 /* PlacemarkWorkerTests.swift */; };
+		90A266C6246438C200F01376 /* PlacemarkPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A266C2246438C200F01376 /* PlacemarkPresenterTests.swift */; };
 		90B5F1DD2461FC430080CCC2 /* PlacemarkPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B5F1D72461FC430080CCC2 /* PlacemarkPresenter.swift */; };
 		90B5F1DE2461FC430080CCC2 /* PlacemarkWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B5F1D82461FC430080CCC2 /* PlacemarkWorker.swift */; };
 		90B5F1DF2461FC430080CCC2 /* PlacemarkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B5F1D92461FC430080CCC2 /* PlacemarkRouter.swift */; };
@@ -67,9 +71,13 @@
 		716A686A1F312A7B0049C058 /* CurAddressTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CurAddressTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		716A686C1F312A7B0049C058 /* CurAddressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurAddressTests.swift; sourceTree = "<group>"; };
 		716A686E1F312A7B0049C058 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		718A63CA1F70486F006818C7 /* CurAddressTestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CurAddressTestHelpers.swift; path = Scenes/CurAddressTestHelpers.swift; sourceTree = "<group>"; };
 		718DFDAD1F212E8800828B7B /* CurAddress-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CurAddress-Bridging-Header.h"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* CurrentAddress-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CurrentAddress-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		90A266BC246438A900F01376 /* CurAddressTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurAddressTestHelpers.swift; sourceTree = "<group>"; };
+		90A266BF246438C200F01376 /* PlacemarkViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacemarkViewControllerTests.swift; sourceTree = "<group>"; };
+		90A266C0246438C200F01376 /* PlacemarkInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacemarkInteractorTests.swift; sourceTree = "<group>"; };
+		90A266C1246438C200F01376 /* PlacemarkWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacemarkWorkerTests.swift; sourceTree = "<group>"; };
+		90A266C2246438C200F01376 /* PlacemarkPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacemarkPresenterTests.swift; sourceTree = "<group>"; };
 		90B5F1D72461FC430080CCC2 /* PlacemarkPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacemarkPresenter.swift; sourceTree = "<group>"; };
 		90B5F1D82461FC430080CCC2 /* PlacemarkWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacemarkWorker.swift; sourceTree = "<group>"; };
 		90B5F1D92461FC430080CCC2 /* PlacemarkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacemarkRouter.swift; sourceTree = "<group>"; };
@@ -174,9 +182,10 @@
 		716A686B1F312A7B0049C058 /* CurAddressTests */ = {
 			isa = PBXGroup;
 			children = (
+				90A266BE246438B300F01376 /* Scenes */,
 				716A686C1F312A7B0049C058 /* CurAddressTests.swift */,
-				718A63CA1F70486F006818C7 /* CurAddressTestHelpers.swift */,
 				716A686E1F312A7B0049C058 /* Info.plist */,
+				90A266BC246438A900F01376 /* CurAddressTestHelpers.swift */,
 			);
 			path = CurAddressTests;
 			sourceTree = "<group>";
@@ -201,6 +210,25 @@
 				90D4BCFB245E158800EA51C2 /* MapInteractor.swift */,
 			);
 			path = Map;
+			sourceTree = "<group>";
+		};
+		90A266BE246438B300F01376 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				90A266C7246438C700F01376 /* Placemark */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		90A266C7246438C700F01376 /* Placemark */ = {
+			isa = PBXGroup;
+			children = (
+				90A266BF246438C200F01376 /* PlacemarkViewControllerTests.swift */,
+				90A266C0246438C200F01376 /* PlacemarkInteractorTests.swift */,
+				90A266C1246438C200F01376 /* PlacemarkWorkerTests.swift */,
+				90A266C2246438C200F01376 /* PlacemarkPresenterTests.swift */,
+			);
+			path = Placemark;
 			sourceTree = "<group>";
 		};
 		90B5F1D62461FC100080CCC2 /* Placemark */ = {
@@ -350,7 +378,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				716A686D1F312A7B0049C058 /* CurAddressTests.swift in Sources */,
-				718A63CB1F70486F006818C7 /* CurAddressTestHelpers.swift in Sources */,
+				90A266C6246438C200F01376 /* PlacemarkPresenterTests.swift in Sources */,
+				90A266C5246438C200F01376 /* PlacemarkWorkerTests.swift in Sources */,
+				90A266BD246438A900F01376 /* CurAddressTestHelpers.swift in Sources */,
+				90A266C3246438C200F01376 /* PlacemarkViewControllerTests.swift in Sources */,
+				90A266C4246438C200F01376 /* PlacemarkInteractorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
