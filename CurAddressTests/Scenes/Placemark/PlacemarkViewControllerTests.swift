@@ -13,46 +13,103 @@
 @testable import CurAddress
 import XCTest
 
+// MARK: Test doubles
+class PlacemarkBusinessLogicSpy: PlacemarkBusinessLogic {
+    var showPhysicalAddressCalled = false
+    func showPhysicalAddress(request: Placemark.ShowPhysicalAddress.Request) {
+        showPhysicalAddressCalled = true
+    }
+}
+class PlacemarkViewControllerTableViewSpy: UITableView {
+    var reloadSectionsCalled = false
+    var reloadSectionIndexSet: IndexSet?
+    override func reloadSections(_ sections: IndexSet, with animation: UITableView.RowAnimation) {
+        reloadSectionIndexSet = sections
+        reloadSectionsCalled = true
+    }
+}
 class PlacemarkViewControllerTests: XCTestCase
 {
-  // MARK: Subject under test
-  
-  var sut: PlacemarkViewController!
-  var window: UIWindow!
-  
-  // MARK: Test lifecycle
-  
-  override func setUp()
-  {
-    super.setUp()
-    window = UIWindow()
-    setupPlacemarkViewController()
-  }
-  
-  override func tearDown()
-  {
-    window = nil
-    super.tearDown()
-  }
-  
-  // MARK: Test setup
-  
-  func setupPlacemarkViewController()
-  {
-    let bundle = Bundle.main
-    let storyboard = UIStoryboard(name: "MainStoryboard", bundle: bundle)
-    sut = storyboard.instantiateViewController(withIdentifier: "PlacemarkViewController") as! PlacemarkViewController
-  }
-  
-  func loadView()
-  {
-    window.addSubview(sut.view)
-    RunLoop.current.run(until: Date())
-  }
-  
-  // MARK: Test doubles
-  
-  
-  // MARK: Tests
-
+    // MARK: Subject under test
+    
+    var sut: PlacemarkViewController!
+    var window: UIWindow!
+    
+    // MARK: Test lifecycle
+    
+    override func setUp()
+    {
+        super.setUp()
+        window = UIWindow()
+        setupPlacemarkViewController()
+    }
+    
+    override func tearDown()
+    {
+        window = nil
+        super.tearDown()
+    }
+    
+    // MARK: Test setup
+    
+    func setupPlacemarkViewController()
+    {
+        let bundle = Bundle.main
+        let storyboard = UIStoryboard(name: "MainStoryboard", bundle: bundle)
+        sut = storyboard.instantiateViewController(withIdentifier: "PlacemarkViewController") as! PlacemarkViewController
+    }
+    
+    func loadView()
+    {
+        window.addSubview(sut.view)
+        RunLoop.current.run(until: Date())
+    }
+    
+    // MARK: Test doubles
+    
+    
+    // MARK: Tests
+    func testShouldShowPhysicalAddressWhenViewDidLoad() {
+        // Given
+        let spy = PlacemarkBusinessLogicSpy()
+        sut.interactor = spy
+        loadView()
+        // When
+        sut.viewDidLoad()
+        // Then
+        XCTAssertTrue(spy.showPhysicalAddressCalled, "viewDidLoad() should ask the interactor to show the physical address")
+    }
+    
+    func testDisplayPhysicalAddressShouldReloadTableView() {
+        // Given
+        let spy = PlacemarkBusinessLogicSpy()
+        sut.interactor = spy
+        loadView()
+        let tableViewSpy = PlacemarkViewControllerTableViewSpy()
+        sut.tableView = tableViewSpy
+        let placemark = CurAddressTestHelpers.placemark
+        let viewModel = Placemark.ShowPhysicalAddress.ViewModel(placemark: placemark)
+        // When
+        sut.displayPhysicalAddress(viewModel: viewModel)
+        // Then
+        XCTAssertTrue(tableViewSpy.reloadSectionsCalled, "reloadSections() should ask the tableView to reload the sections")
+        XCTAssertEqual(tableViewSpy.reloadSectionIndexSet, IndexSet(integer: 0), "should ask the tableview to reload the first section")
+    }
+    
+    func testDisplayPhysicalAddressShouldConfigureCells() {
+        // Given
+        let spy = PlacemarkBusinessLogicSpy()
+        sut.interactor = spy
+        loadView()
+        let placemark = CurAddressTestHelpers.placemark
+        let viewModel = Placemark.ShowPhysicalAddress.ViewModel(placemark: placemark)
+        // When
+        sut.displayPhysicalAddress(viewModel: viewModel)
+        
+        // Then
+        let cell = sut.tableView.cellForRow(at: .init(row: 0, section: 0))
+        XCTAssertNotNil(cell)
+        XCTAssertEqual(cell?.detailTextLabel?.text, placemark.thoroughfare, "displayPhysicalAddress() should set 1st cell to the thoroughfare")
+    }
+    
 }
